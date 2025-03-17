@@ -5,12 +5,12 @@
 ** main.c
 */
 
-#include "../include/Types.h"
+#include "../include/types.h"
 #include <stdio.h>
 
 int main(void)
 {
-    String str = create(String_Class, "SALUT");
+    STRING str = create(String_Class, "SALUT");
 
     printf("%s\n", str->value);
     str->from_file(str, "Makefile");

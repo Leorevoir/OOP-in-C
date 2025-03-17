@@ -5,10 +5,10 @@
 ** free_gc.c
 */
 
-#include "../../include/Interface.h"
+#include "../../include/interface.h"
 #include <stdlib.h>
 
-void safe_free(Object **ptr)
+void safe_free(Object_t **ptr)
 {
     if (!ptr || !*ptr) {
         return;
@@ -17,10 +17,10 @@ void safe_free(Object **ptr)
     *ptr = NULL;
 }
 
-void free_object(Object **restrict obj)
+void free_object(Object_t **restrict obj)
 {
-    Object *ptr = *obj;
-    const Class *class_ptr = (const Class *)ptr;
+    Object_t *ptr = *obj;
+    const Class_t *class_ptr = (const Class_t *)ptr;
 
     if (!obj || !*obj) {
         return;

@@ -8,11 +8,11 @@
 #ifndef STRING_CLASS_H_H
     #define STRING_CLASS_H_H
 
-#include <stddef.h>
-#include "Interface.h"
+    #include <stddef.h>
+    #include "interface.h"
 
 typedef struct String_s {
-    Class base;
+    Class_t base;
     char *value;
     size_t length;
     /* methods */
@@ -21,6 +21,6 @@ typedef struct String_s {
 
 void string_from_file(String_t *, const char *);
 
-extern const Class *String_Class;
+extern const Class_t *String_Class;
 
 #endif /* STRING_CLASS_H_H */

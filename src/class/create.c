@@ -5,14 +5,14 @@
 ** create.c
 */
 
-#include "../../include/Interface.h"
-#include "../../include/Lib.h"
+#include "../../include/interface.h"
+#include "../../include/lib.h"
 #include <string.h>
 #include <stdlib.h>
 
-void safe_alloc(Object **ptr, const size_t size)
+void safe_alloc(Object_t **ptr, const size_t size)
 {
-    Object *obj = malloc(size);
+    Object_t *obj = malloc(size);
 
     if (!obj) {
         raise_error("safe_alloc", "malloc failed");
@@ -20,9 +20,9 @@ void safe_alloc(Object **ptr, const size_t size)
     *ptr = obj;
 }
 
-Object *create(const Class *restrict class_type, ...)
+Object_t *create(const Class_t *restrict class_type, ...)
 {
-    Object *obj = NULL;
+    Object_t *obj = NULL;
     va_list args;
 
     if (!class_type) {

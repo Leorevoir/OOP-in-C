@@ -8,12 +8,15 @@
 #ifndef CLASS_TYPES_H_
     #define CLASS_TYPES_H_
 
-#include "Interface.h"
-#include "String.h"
+    #include "interface.h"
+    #include "safe_string.h"
 
-    #define String String_t *__attribute__((cleanup(free_string)))
+    /*
+     * cringe coding style forces me to DEFINE STRING
+     */
+    #define STRING String_t *__attribute__((cleanup(free_string)))
 
-void free_object(Object **obj);
+void free_object(Object_t **obj);
 
 static inline void free_string(String_t **ptr)
 {

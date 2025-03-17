@@ -5,14 +5,14 @@
 ** string.c
 */
 
-#include "../../include/String.h"
+#include "../../include/safe_string.h"
 #include <stdlib.h>
 #include <string.h>
 
 static void string_ctor(String_t *self, va_list *args)
 {
     const char *str = va_arg(*args, const char *);
-    
+
     if (str) {
         self->length = strlen(str);
         self->value = malloc(self->length + 1);
@@ -30,7 +30,7 @@ static void string_ctor(String_t *self, va_list *args)
 static void string_dtor(String_t *self)
 {
     if (self->value) {
-        safe_free((Object **)&self->value);
+        safe_free((Object_t **)&self->value);
     }
 }
 
@@ -46,4 +46,4 @@ static const String_t string_description = {
     .from_file = &string_from_file
 };
 
-const Class *String_Class = (const Class *)&string_description;
+const Class_t *String_Class = (const Class_t *)&string_description;

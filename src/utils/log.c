@@ -5,7 +5,7 @@
 ** log.c
 */
 
-#include "../../include/Macro.h"
+#include "../../include/macro.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>

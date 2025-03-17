@@ -5,8 +5,8 @@
 ** from_file.c
 */
 
-#include "../../include/String.h"
-#include "../../include/Lib.h"
+#include "../../include/safe_string.h"
+#include "../../include/lib.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -24,8 +24,8 @@ static void try_read_file(FILE *stream, String_t *self)
 {
     const size_t size = get_file_size(stream);
 
-    safe_free((Object **)&self->value); 
-    safe_alloc((Object **)&self->value, size);
+    safe_free((Object_t **)&self->value);
+    safe_alloc((Object_t **)&self->value, size);
     self->length = fread(self->value, 1, size, stream);
     if (size != self->length) {
         raise_error("try_read_file", "fread failed");
@@ -41,7 +41,7 @@ void string_from_file(String_t *self, const char *restrict filename)
     }
     if (!stream) {
         raise_error("string_from_file", "cannot open!");
-}
+    }
     try_read_file(stream, self);
     fclose(stream);
 }
