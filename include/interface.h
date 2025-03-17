@@ -11,6 +11,11 @@
     #include <stdarg.h>
     #include <stddef.h>
 
+/*
+ * base Class interface ! $
+ * All this repo class inherits from this interface
+ */
+
 typedef struct Class_s {
     const size_t __size__;
     const char *__name__;

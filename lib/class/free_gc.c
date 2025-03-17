@@ -8,6 +8,9 @@
 #include "../../include/interface.h"
 #include <stdlib.h>
 
+/*
+ * safer than a simple free bc set ptr to NULL
+ */
 void safe_free(Object_t **ptr)
 {
     if (!ptr || !*ptr) {
@@ -17,6 +20,11 @@ void safe_free(Object_t **ptr)
     *ptr = NULL;
 }
 
+/*
+* free an Object_t *ptr and call its __ctor__ if it is a class ptr.
+* example:
+*   free_object(&ptr);
+*/
 void free_object(Object_t **restrict obj)
 {
     Object_t *ptr = *obj;

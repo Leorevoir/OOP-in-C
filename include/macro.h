@@ -11,4 +11,6 @@
     #define SUCCESS 0
     #define ERROR 84
 
+    #define START 0
+
 #endif /* MACRO_H_ */

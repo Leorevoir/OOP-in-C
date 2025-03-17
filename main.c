@@ -24,16 +24,16 @@ static void debug_print_array(Array_t *array)
         data = array->get(array, it->index);
         switch (it->index) {
             case 0:
-                console_log(stdout, "Array[%zu] = %s\n", it->index, (char *)data);
+                console_log(stdout, "Array[%zu] = %s", it->index, (char *)data);
                 break;
             case 1:
-                console_log(stdout, "Array[%zu] = %d\n", it->index, *(int *)data);
+                console_log(stdout, "Array[%zu] = %d", it->index, *(int *)data);
                 break;
             case 2:
-                console_log(stdout, "Array[%zu] = %.2f\n", it->index, *(float *)data);
+                console_log(stdout, "Array[%zu] = %.2f", it->index, *(float *)data);
                 break;
             default:
-                console_log(stdout, "Array[%zu] = (unknown type)\n", it->index);
+                console_log(stdout, "Array[%zu] = (unknown type)", it->index);
                 break;
         }
         it->next(it);

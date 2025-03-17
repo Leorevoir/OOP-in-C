@@ -14,6 +14,15 @@
 
 typedef struct Iterator_s Iterator_t;
 
+/*
+ * Iterator interface base class
+ *
+ * .next(it) -> return Object_t *
+ * .prev(it) -> return Object_t *
+ * .end(it) -> return bool
+ * .rewind(it) -> makes index = 0
+ */
+
 struct Iterator_s {
     Class_t base;
     Object_t *object;

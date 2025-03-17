@@ -18,6 +18,10 @@
     #define STRING String_t *__attribute__((cleanup(free_string)))
     #define ARRAY Array_t *__attribute__((cleanup(free_array)))
 
+/*
+ * kind of attempt to "override" `free_object` with differents ptr types
+ * but without C warning it is really hard !
+ */
 
 void free_object(Object_t **obj);
 

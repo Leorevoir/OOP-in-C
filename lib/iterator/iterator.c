@@ -32,6 +32,9 @@ static void iterator_dtor(
     return;
 }
 
+/*
+* the following are just interface
+*/
 static Object_t *iterator_next(__attribute__((unused))Iterator_t *self)
 {
     return NULL;
@@ -47,6 +50,9 @@ static bool iterator_end(__attribute__((unused))Iterator_t *self)
     return true;
 }
 
+/*
+* abstract ? lol
+*/
 static void iterator_rewind(Iterator_t *self)
 {
     self->index = 0;

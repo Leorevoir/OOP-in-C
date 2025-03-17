@@ -24,11 +24,10 @@ static void array_ctor(Array_t *self, va_list *args)
     if (self->tab == NULL) {
         raise_error("array_ctor", "malloc failed");
     }
-    for (size_t i = 0; i < self->length; ++i) {
-        self->tab[i] = NULL;
-    }
-    printf("size: %zu\n", self->size);
     self->it.object = (Object_t *)self;
+    for (; !self->it.end; self->it.next(&self->it)) {
+        self->tab[self->it.index] = NULL;
+    }
 }
 
 /*

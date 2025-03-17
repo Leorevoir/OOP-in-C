@@ -10,6 +10,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+/*
+ * as the name says
+ */
 static size_t get_file_size(FILE *file)
 {
     long size = 0;
@@ -20,6 +23,9 @@ static size_t get_file_size(FILE *file)
     return (size_t)size;
 }
 
+/*
+ * free current string ptr and creates a new one containing file content
+ */
 static void try_read_file(FILE *stream, String_t **self)
 {
     const size_t size = get_file_size(stream);
