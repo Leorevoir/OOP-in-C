@@ -47,7 +47,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 
 test: $(NAME)
 	@gcc main.c $(CFLAGS) -L. -lstring -o test
-	@printf "$(GREEN)[✅] COMPILED:\t$(RST) $(ILC)$(NAME)$(RST)\n"
+	@printf "$(GREEN)[✅] COMPILED:\t$(RST) $(ILC)test$(RST)\n"
 
 clean:
 	@rm -rf $(OBJ_DIR)

@@ -10,9 +10,13 @@
 
     #include <stddef.h>
     #include "interface.h"
+    #include "safe_iterator.h"
 
 typedef struct String_s {
+    /* inherits */
     Class_t base;
+    Iterator_t it;
+    /* attributes */
     char *value;
     size_t length;
     /* methods */
