@@ -69,6 +69,7 @@ static void example_string(String_t *string)
         c = (char)(size_t)it->next(it);
         console_log(stdout, "Character: %c", c);
     }
+    string->from_file(string, "main.c");
 }
 
 /*
@@ -76,7 +77,7 @@ static void example_string(String_t *string)
 */
 int main(void)
 {
-    ARRAY array = create(Array_Class, sizeof(Object_t *), 0);
+    ARRAY array = create(Array_Class, sizeof(Object_t *), 3);
     STRING string = create(String_Class, "Hellooooo Night City!!!!");
 
     example_string(string);

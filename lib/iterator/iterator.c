@@ -47,6 +47,11 @@ static bool iterator_end(__attribute__((unused))Iterator_t *self)
     return true;
 }
 
+static void iterator_rewind(Iterator_t *self)
+{
+    self->index = 0;
+}
+
 static const Iterator_t iterator_description = {
     .base = {
         .__size__ = sizeof(Iterator_t),
@@ -58,7 +63,8 @@ static const Iterator_t iterator_description = {
     .index = 0,
     .next = &iterator_next,
     .prev = &iterator_prev,
-    .end = &iterator_end
+    .end = &iterator_end,
+    .rewind = &iterator_rewind
 };
 
 const Class_t *Iterator_Class = (const Class_t *)&iterator_description;

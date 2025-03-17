@@ -33,6 +33,9 @@ static void try_read_file(FILE *stream, String_t **self)
     (*self)->value[(*self)->length] = '\0';
 }
 
+/*
+* create a string from a file!
+*/
 void string_from_file(String_t *self, const char *restrict filename)
 {
     FILE *stream = fopen(filename, "rb");

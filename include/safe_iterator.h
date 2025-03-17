@@ -22,6 +22,7 @@ struct Iterator_s {
     Object_t *(*next)(Iterator_t *self);
     Object_t *(*prev)(Iterator_t *self);
     bool (*end)(Iterator_t *self);
+    void (*rewind)(Iterator_t *self);
 };
 
 #endif /* ITERATOR_CLASS_H_ */

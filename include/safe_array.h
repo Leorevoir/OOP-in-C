@@ -17,6 +17,12 @@
 
 typedef struct Array_s Array_t;
 
+/*
+ * .get(array, position) -> Object_t *;
+ * .set(array, value, sizeof(value), position) -> bool;
+ * .append(array, value, sizeof(value)) -> bool;
+ */
+
 struct Array_s {
     /* inherits */
     Class_t base;
@@ -28,7 +34,7 @@ struct Array_s {
     /* methods */
     void (*from_file)(Array_t *, const char *);
     Object_t *(*get)(Array_t *, const size_t);
-    bool (*set)(Array_t *, const Object_t *, const size_t, const size_t);
+    bool (*set)(Array_t *, const Object_t *, const size_t sz, const size_t i);
     bool (*append)(Array_t *, const Object_t *, const size_t);
 };
 

@@ -18,15 +18,16 @@ static void array_ctor(Array_t *self, va_list *args)
     const size_t element_size = va_arg(*args, size_t);
     const size_t count = va_arg(*args, size_t);
 
-    self->length = count;
+    self->length = 0;
     self->size = element_size * count;
-    self->tab = malloc(sizeof(Object_t *) * count);
+    self->tab = malloc(sizeof(Object_t *) * self->size);
     if (self->tab == NULL) {
         raise_error("array_ctor", "malloc failed");
     }
     for (size_t i = 0; i < self->length; ++i) {
         self->tab[i] = NULL;
     }
+    printf("size: %zu\n", self->size);
     self->it.object = (Object_t *)self;
 }
 
