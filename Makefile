@@ -22,7 +22,8 @@ NAME	= libstring.a
 SRC = $(wildcard $(SRC_DIR)/*.c) \
 	  $(wildcard $(SRC_DIR)/utils/*.c) \
 	  $(wildcard $(SRC_DIR)/class/*.c) \
-	  $(wildcard $(SRC_DIR)/string/*.c)
+	  $(wildcard $(SRC_DIR)/string/*.c) \
+	  $(wildcard $(SRC_DIR)/array/*.c)
 
 SRC_OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 

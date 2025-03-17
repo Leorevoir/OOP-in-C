@@ -9,7 +9,7 @@
 #include "include/macro.h"
 #include <stdio.h>
 
-static void test_string(String_t *str)
+void test_string(String_t *str)
 {
     printf("%s\n", str->value);
     str->from_file(str, "Makefile");
@@ -19,6 +19,11 @@ static void test_string(String_t *str)
 int main(void)
 {
     STRING str = create(String_Class, "SALUT");
+    ARRAY str_array = create(Array_Class, sizeof(char *));
+    ARRAY int_array = create(Array_Class, sizeof(int *), 10);
 
+    /*test_string(str);*/
+    (void)str;
+    (void)str_array;
     return SUCCESS; 
 }

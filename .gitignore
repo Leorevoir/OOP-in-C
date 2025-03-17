@@ -1,5 +1,5 @@
 *.o
-oop
 test
+libstring.a
 vgcore*
 objects/
