@@ -16,14 +16,19 @@ void test_string(String_t *str)
     printf("%s\n", str->value);
 }
 
+void debug_print(Array_t *array)
+{
+    for (size_t i = 0; i < 10; ++i) {
+        printf("{%ld}\t->\t%s\n", i, (char *)array->tab[i]);
+    }
+}
+
 int main(void)
 {
     STRING str = create(String_Class, "SALUT");
     ARRAY str_array = create(Array_Class, sizeof(char *));
     ARRAY int_array = create(Array_Class, sizeof(int *), 10);
 
-    /*test_string(str);*/
-    (void)str;
-    (void)str_array;
-    return SUCCESS; 
+    debug_print(int_array);
+    return SUCCESS;
 }

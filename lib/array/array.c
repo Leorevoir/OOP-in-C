@@ -10,36 +10,35 @@
 #include <stdlib.h>
 #include <string.h>
 
-static void array_ctor_allocation(Array_t **self)
-{
-    if ((*self)->length != 0) {
-        (*self)->tab = malloc(sizeof(Object_t *) * (*self)->size * (*self)->length);
-        return;
-    }
-    (*self)->tab = malloc(sizeof(Object_t *) * (*self)->size);
-}
-
 static void array_ctor(Array_t *self, va_list *args)
 {
-    if (!args) {
-        raise_error("array_ctor", "ich habe no arguments gefunden....");
+    const size_t element_size = va_arg(*args, size_t);
+    const size_t count = va_arg(*args, size_t);
+
+    self->length = count;
+    self->size = element_size * count;
+    self->tab = malloc(sizeof(Object_t *) * count);
+    if (self->tab == NULL) {
+        raise_error("array_ctor", "malloc failed");
     }
-    self->size = va_arg(*args, size_t);
-    self->length = va_arg(*args, size_t);
-    array_ctor_allocation(&self);
+    console_log(stdout, "size: %ld\n", self->size);
+    for (size_t i = 0; i < self->length; ++i) {
+        self->tab[i] = NULL;
+    }
 }
 
 static void array_dtor(Array_t *self)
 {
-    if (self->tab) {
+    if (!self->tab) {
+        return;
     }
-}
-
-void array_from_file(Array_t *array, const char *restrict filename)
-{
-    (void)array;
-    (void)filename;
-    return;
+    for (size_t i = 0; i < self->length; ++i) {
+        if (!self->tab[i]) {
+            break;
+        }
+        safe_free((void **)&(self->tab[i]));
+    }
+    safe_free((void **)&self->tab);
 }
 
 static const Array_t array_description = {
