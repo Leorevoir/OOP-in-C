@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2025
+** Lib-OOP-GC
+** File description:
+** main.c
+*/
+
 #include "../include/Types.h"
 #include <stdio.h>
 

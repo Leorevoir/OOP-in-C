@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2025
+** Lib-OOP-GC
+** File description:
+** interface.h
+*/
+
 #ifndef INTERFACE_CLASS_H_
     #define INTERFACE_CLASS_H_
 

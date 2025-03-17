@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2025
+** Lib-OOP-GC
+** File description:
+** string.h
+*/
+
 #ifndef STRING_CLASS_H_H
     #define STRING_CLASS_H_H
 

@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2025
+** Lib-OOP-GC
+** File description:
+** lib.h
+*/
+
 #ifndef MY_AMAZING_LIB_H
     #define MY_AMAZING_LIB_H
 

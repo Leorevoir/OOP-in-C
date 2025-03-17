@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2025
+** Lib-OOP-GC
+** File description:
+** string.c
+*/
+
 #include "../../include/String.h"
 #include <stdlib.h>
 #include <string.h>

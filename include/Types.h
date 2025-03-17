@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2025
+** Lib-OOP-GC
+** File description:
+** types.h
+*/
+
 #ifndef CLASS_TYPES_H_
     #define CLASS_TYPES_H_
 

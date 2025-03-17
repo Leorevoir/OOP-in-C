@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2025
+** Lib-OOP-GC
+** File description:
+** free_gc.c
+*/
+
 #include "../../include/Interface.h"
 #include <stdlib.h>
 

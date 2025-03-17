@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2025
+** Lib-OOP-GC
+** File description:
+** from_file.c
+*/
+
 #include "../../include/String.h"
 #include "../../include/Lib.h"
 #include <stdlib.h>

@@ -1,4 +1,4 @@
 *.o
-object/
 oop
 vgcore*
+objects/

@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2025
+** Lib-OOP-GC
+** File description:
+** create.c
+*/
+
 #include "../../include/Interface.h"
 #include "../../include/Lib.h"
 #include <string.h>
