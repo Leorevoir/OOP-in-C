@@ -5,7 +5,7 @@
 ** main.c
 */
 
-#include "../include/types.h"
+#include "include/types.h"
 #include <stdio.h>
 
 int main(void)
