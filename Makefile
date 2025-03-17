@@ -44,14 +44,19 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@$(CC) $(CFLAGS) -o $@ -c $<
 	@printf "$(ORANGE)[🚧] BUILDING:\t$(RST) $(ILC)$<$(RST)\n"
 
+test: $(NAME)
+	@gcc main.c $(CFLAGS) -L. -lstring -o test
+	@printf "$(GREEN)[✅] COMPILED:\t$(RST) $(ILC)$(NAME)$(RST)\n"
+
 clean:
 	@rm -rf $(OBJ_DIR)
 	@printf "$(RED)[❌] CLEAN:\t$(RST) Removed $(ILC)$(OBJ_DIR)$(RST)\n"
 
 fclean: clean
 	@rm -f $(NAME)
+	@rm -f test
 	@printf "$(RED)[❌] FCLEAN:\t$(RST) Removed $(ILC)$(NAME)$(RST)\n"
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean test re
