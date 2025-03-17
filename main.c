@@ -5,6 +5,7 @@
 ** main.c
 */
 
+#include "include/safe_iterator.h"
 #include "include/types.h"
 #include "include/macro.h"
 #include <stdio.h>
@@ -14,16 +15,24 @@
 static void debug_print_array(Array_t *array)
 {
     Object_t *data = NULL;
+    Iterator_t *it = &array->it;
 
-    for (size_t i = 0; i < array->length; ++i) {
-        data = array->get(array, i);
-        if (i == 0) {
-            console_log(stdout, "Array[%zu] = %s", i, (char *)data);
-        } if (i == 1) {
-            console_log(stdout, "Array[%zu] = %d", i, *(int *)data);
-        } if (i == 2) {
-            console_log(stdout, "Array[%zu] = %.2f", i, *(float *)data);
+    while (!it->end(it)) {
+        data = array->get(array, it->index);
+        switch (it->index) {
+            case 0:
+                console_log(stdout, "Array[%zu] = %s", it->index, (char *)data);
+                break;
+            case 1:
+                console_log(stdout, "Array[%zu] = %d", it->index, *(int *)data);
+                break;
+            case 2:
+                console_log(stdout, "Array[%zu] = %.2f", it->index, *(float *)data);
+                break;
+            default:
+                break;
         }
+        it->next(it);
     }
 }
 

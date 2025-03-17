@@ -10,6 +10,7 @@
 
     #include <stddef.h>
     #include "interface.h"
+    #include "safe_iterator.h"
     #include <stdbool.h>
 
     #define ARRAY_OOB "Warning: Index %zu out of bound (length: %zu)"
@@ -17,8 +18,11 @@
 typedef struct Array_s Array_t;
 
 struct Array_s {
+    /* inherits */
     Class_t base;
     Object_t **tab;
+    Iterator_t it;
+    /* attributes */
     size_t length;
     size_t size;
     /* methods */

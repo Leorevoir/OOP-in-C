@@ -27,6 +27,7 @@ static void array_ctor(Array_t *self, va_list *args)
     for (size_t i = 0; i < self->length; ++i) {
         self->tab[i] = NULL;
     }
+    self->it.object = (Object_t *)self;
 }
 
 /*
@@ -120,12 +121,58 @@ static void *array_get_value(Array_t *self, const size_t i)
     return self->tab[i];
 }
 
+/*
+* Iterator prev override
+*/
+static void *array_it_prev(Iterator_t *self)
+{
+    const Array_t *array = (Array_t *)self->object;
+    Object_t *target = NULL;
+
+    if (self->index == 0) {
+        return NULL;
+    }
+    target = array->tab[self->index];
+    self->index--;
+    return target;
+}
+
+/*
+* Iterator next override
+*/
+static void *array_it_next(Iterator_t *self)
+{
+    const Array_t *array = (Array_t *)self->object;
+    Object_t *target = NULL;
+
+    if (self->index >= array->length) {
+        return NULL;
+    }
+    target = array->tab[self->index];
+    self->index++;
+    return target;
+}
+
+static bool array_it_end(Iterator_t *self)
+{
+    const Array_t *array = (Array_t *)self->object;
+
+    return self->index >= array->length;
+}
+
 static const Array_t array_description = {
     .base = {
         .__size__ = sizeof(Array_t),
         .__name__ = "Array",
         .__ctor__ = (void (*)(void *, va_list *))array_ctor,
         .__dtor__ = (void (*)(void *))array_dtor,
+    },
+    .it = {
+        .object = NULL,
+        .prev = &array_it_prev,
+        .next = &array_it_next,
+        .end = &array_it_end,
+        .index = 0,
     },
     .tab = NULL,
     .length = 0,
