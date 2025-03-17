@@ -20,16 +20,17 @@ static size_t get_file_size(FILE *file)
     return (size_t)size;
 }
 
-static void try_read_file(FILE *stream, String_t *self)
+static void try_read_file(FILE *stream, String_t **self)
 {
     const size_t size = get_file_size(stream);
 
-    safe_free((Object_t **)&self->value);
-    safe_alloc((Object_t **)&self->value, size);
-    self->length = fread(self->value, 1, size, stream);
-    if (size != self->length) {
+    safe_free((Object_t **)&(*self)->value);
+    safe_alloc((Object_t **)&(*self)->value, size + 1);
+    (*self)->length = fread((*self)->value, 1, size, stream);
+    if (size != (*self)->length) {
         raise_error("try_read_file", "fread failed");
     }
+    (*self)->value[(*self)->length] = '\0';
 }
 
 void string_from_file(String_t *self, const char *restrict filename)
@@ -42,6 +43,6 @@ void string_from_file(String_t *self, const char *restrict filename)
     if (!stream) {
         raise_error("string_from_file", "cannot open!");
     }
-    try_read_file(stream, self);
+    try_read_file(stream, &self);
     fclose(stream);
 }

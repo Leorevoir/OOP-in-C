@@ -12,12 +12,10 @@
 
 void safe_alloc(Object_t **ptr, const size_t size)
 {
-    Object_t *obj = malloc(size);
-
-    if (!obj) {
+    *ptr = malloc(size * sizeof(Object_t *));
+    if (!*ptr) {
         raise_error("safe_alloc", "malloc failed");
     }
-    *ptr = obj;
 }
 
 Object_t *create(const Class_t *restrict class_type, ...)
