@@ -153,6 +153,9 @@ static void *array_it_next(Iterator_t *self)
     return target;
 }
 
+/*
+* Iterator end override
+*/
 static bool array_it_end(Iterator_t *self)
 {
     const Array_t *array = (Array_t *)self->object;
