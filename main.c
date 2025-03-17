@@ -8,27 +8,42 @@
 #include "include/types.h"
 #include "include/macro.h"
 #include <stdio.h>
+#include "include/lib.h"
+#include <string.h>
 
-void test_string(String_t *str)
+static void debug_print_array(Array_t *array)
 {
-    printf("%s\n", str->value);
-    str->from_file(str, "Makefile");
-    printf("%s\n", str->value);
+    Object_t *data = NULL;
+
+    for (size_t i = 0; i < array->length; ++i) {
+        data = array->get(array, i);
+        if (i == 0) {
+            console_log(stdout, "Array[%zu] = %s", i, (char *)data);
+        } if (i == 1) {
+            console_log(stdout, "Array[%zu] = %d", i, *(int *)data);
+        } if (i == 2) {
+            console_log(stdout, "Array[%zu] = %.2f", i, *(float *)data);
+        }
+    }
 }
 
-void debug_print(Array_t *array)
+static void example_array(Array_t *array)
 {
-    for (size_t i = 0; i < 10; ++i) {
-        printf("{%ld}\t->\t%s\n", i, (char *)array->tab[i]);
-    }
+    const char *str_literal = "salut";
+    float pi = 3.14f;
+    int num = 42;
+
+    array->append(array, (char *)str_literal, strlen(str_literal) + 1);
+    array->append(array, &num, sizeof(int));
+    array->append(array, NULL, 0);
+    array->set(array, &pi, sizeof(float), 2);
+    debug_print_array(array);
 }
 
 int main(void)
 {
-    STRING str = create(String_Class, "SALUT");
-    ARRAY str_array = create(Array_Class, sizeof(char *));
-    ARRAY int_array = create(Array_Class, sizeof(int *), 10);
+    ARRAY array = create(Array_Class, sizeof(Object_t *), 0);
 
-    debug_print(int_array);
+    example_array(array);
     return SUCCESS;
 }

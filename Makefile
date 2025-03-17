@@ -55,7 +55,7 @@ clean:
 
 fclean: clean
 	@rm -f $(NAME)
-	@rm -f test
+	@rm -f vgcore* test *.log
 	@printf "$(RED)[❌] FCLEAN:\t$(RST) Removed $(ILC)$(NAME)$(RST)\n"
 
 re: fclean all
