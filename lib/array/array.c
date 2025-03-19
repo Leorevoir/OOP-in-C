@@ -18,7 +18,6 @@ static void array_ctor(Array_t *self, va_list *args)
     const size_t element_size = va_arg(*args, size_t);
     const size_t count = va_arg(*args, size_t);
 
-    self->length = 0;
     self->size = element_size * count;
     self->tab = malloc(sizeof(Object_t *) * self->size);
     if (self->tab == NULL) {
@@ -70,10 +69,7 @@ static _Bool array_append_value(
         self->tab = new_tab;
         self->size = new_size;
     }
-    self->tab[self->length] = malloc(data_size);
-    if (self->tab[self->length] == NULL) {
-        raise_error("array_append_value", "malloc failed");
-    }
+    safe_alloc(&self->tab[self->length], data_size);
     memcpy(self->tab[self->length], data, data_size);
     self->length++;
     return true;
@@ -98,10 +94,7 @@ static _Bool array_set_value(
     if (self->tab[i] != NULL) {
         safe_free((void **)&(self->tab[i]));
     }
-    self->tab[i] = malloc(data_size);
-    if (self->tab[i] == NULL) {
-        raise_error("array_set_value", "malloc failed");
-    }
+    safe_alloc(&self->tab[i], data_size);
     memcpy(self->tab[i], data, data_size);
     return true;
 }

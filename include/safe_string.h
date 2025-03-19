@@ -29,6 +29,7 @@ struct String_s {
     size_t length;
     /* methods */
     void (*from_file)(String_t *, const char *);
+    void (*change)(String_t *, const char *);
 };
 
 void string_from_file(String_t *self, const char *filename);
