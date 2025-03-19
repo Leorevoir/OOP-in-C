@@ -18,7 +18,7 @@ static void string_ctor(String_t *self, va_list *args)
 
     if (str) {
         self->length = strlen(str);
-        self->value = malloc(self->length + 1);
+        safe_alloc((Object_t **)&self->value, self->length + 1);
         if (self->value) {
             strcpy(self->value, str);
         } else {
@@ -39,6 +39,19 @@ static void string_dtor(String_t *self)
     if (self->value) {
         safe_free((Object_t **)&self->value);
     }
+}
+
+static void string_change(String_t *self, const char *str)
+{
+    if (!str) {
+        return;
+    }
+    if (!self->value) {
+        self->value = strdup(str);
+        return;
+    }
+    safe_free((Object_t **)&self->value);
+    self->value = strdup(str);
 }
 
 /*
@@ -99,7 +112,8 @@ static const String_t string_description = {
     },
     .value = NULL,
     .length = 0,
-    .from_file = &string_from_file
+    .from_file = &string_from_file,
+    .change = &string_change
 };
 
 const Class_t *String_Class = (const Class_t *)&string_description;

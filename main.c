@@ -15,7 +15,7 @@
 * showcases how array works with different types
 * using Iterator for safe loop and printf
 */
-static void debug_print_array(Array_t *array)
+void debug_print_array(Array_t *array)
 {
     Object_t *data = NULL;
     Iterator_t *it = &array->it;
@@ -44,7 +44,7 @@ static void debug_print_array(Array_t *array)
 * showcases how array works with different types
 * dynamically allocated in the same array!
 */
-static void example_array(Array_t *array)
+void example_array(Array_t *array)
 {
     const char *str_literal = "salut";
     float pi = 3.14f;
@@ -60,7 +60,7 @@ static void example_array(Array_t *array)
 /*
 * showcases on how you iterate through String using Iterator
 */
-static void example_string(String_t *string)
+void example_string(String_t *string)
 {
     Iterator_t *it = &string->it;
     char c = 0;
@@ -70,6 +70,34 @@ static void example_string(String_t *string)
         console_log(stdout, "Character: %c", c);
     }
     string->from_file(string, "main.c");
+    console_log(stdout, "%s\n", string->value);
+}
+
+/*
+ * showcases how List works
+ * (still alpha but works with every types)
+ */
+typedef struct Vector_s {
+    float x;
+    float y;
+} Vector2f_t;
+
+static void example_list(List_t *list)
+{
+    Iterator_t *it = &list->it;
+    Vector2f_t vec1 = {.x = 1.0f, .y = 2.0f};
+    Vector2f_t vec2 = {.x = 4.0f, .y = -2.0f};
+    Vector2f_t vec3 = {.x = 3.0f, .y = 0.0f};
+    Vector2f_t *vec = NULL;
+
+    list->push_back(list, &vec1, sizeof(Vector2f_t));
+    list->push_back(list, &vec2, sizeof(Vector2f_t));
+    list->push_back(list, &vec3, sizeof(Vector2f_t));
+    while (!it->end(it)) {
+        vec = (Vector2f_t *)it->next(it);
+        printf("x: %.2f, y: %.2f\n", vec->x, vec->y);
+        it->next(it);
+    }
 }
 
 /*
@@ -79,9 +107,10 @@ int main(void)
 {
     ARRAY array = create(Array_Class, sizeof(Object_t *), 3);
     STRING string = create(String_Class, "Hellooooo Night City!!!!");
+    LIST list = create(List_Class, sizeof(Object_t *), 16);
 
-    example_string(string);
     example_array(array);
+    example_string(string);
+    example_list(list);
     return SUCCESS;
 }
-
