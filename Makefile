@@ -22,6 +22,7 @@ NAME	= libstring.a
 SRC = $(wildcard $(SRC_DIR)/*.c) \
 	  $(wildcard $(SRC_DIR)/utils/*.c) \
 	  $(wildcard $(SRC_DIR)/class/*.c) \
+	  $(wildcard $(SRC_DIR)/iterator/*.c) \
 	  $(wildcard $(SRC_DIR)/string/*.c) \
 	  $(wildcard $(SRC_DIR)/array/*.c) \
 	  $(wildcard $(SRC_DIR)/list/*.c)

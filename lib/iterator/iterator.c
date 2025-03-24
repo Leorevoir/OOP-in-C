@@ -25,9 +25,7 @@ static void iterator_ctor(Iterator_t *self, va_list *args)
 * forced to declare a dtor to respect the Class_t interface
 * but useless here !
 */
-static void iterator_dtor(
-    __attribute__((unused))Iterator_t *self,
-    __attribute__((unused))va_list *args)
+static void iterator_dtor(__attribute__((unused))Iterator_t *self)
 {
     return;
 }
@@ -53,7 +51,7 @@ static bool iterator_end(__attribute__((unused))Iterator_t *self)
 /*
 * abstract ? lol
 */
-static void iterator_rewind(Iterator_t *self)
+void iterator_rewind(Iterator_t *self)
 {
     self->index = 0;
 }

@@ -168,6 +168,7 @@ static const Array_t array_description = {
         .prev = &array_it_prev,
         .next = &array_it_next,
         .end = &array_it_end,
+        .rewind = &iterator_rewind,
         .index = 0,
     },
     .tab = NULL,
