@@ -108,6 +108,7 @@ static const String_t string_description = {
         .prev = &string_it_prev,
         .next = &string_it_next,
         .end = &string_it_end,
+        .rewind = &iterator_rewind,
         .index = 0,
     },
     .value = NULL,

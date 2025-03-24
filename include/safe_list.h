@@ -42,10 +42,12 @@ struct List_s {
     size_t capacity;
     /* methods */
     void (*push_back)(List_t *self, const Object_t *data, const size_t size);
+    void (*pop_at)(List_t *self, const size_t index);
     Object_t *(*get)(List_t *self, const size_t index);
 };
 
 void list_push_back(List_t *self, const Object_t *data, size_t data_size);
+void list_pop_at(List_t *self, const size_t i);
 
 extern const Class_t *List_Class;
 

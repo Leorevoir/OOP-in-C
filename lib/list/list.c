@@ -129,6 +129,7 @@ static const List_t list_description = {
         .prev = &list_it_prev,
         .next = &list_it_next,
         .end = &list_it_end,
+        .rewind = &iterator_rewind,
         .index = 0,
     },
     .head = NULL,
@@ -137,7 +138,8 @@ static const List_t list_description = {
     .size = 0,
     .capacity = 0,
     .push_back = &list_push_back,
-    .get = &list_get,
+    .pop_at = &list_pop_at,
+    .get = &list_get
 };
 
 const Class_t *List_Class = (const Class_t *)&list_description;

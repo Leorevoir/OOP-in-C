@@ -94,7 +94,14 @@ static void example_list(List_t *list)
     list->push_back(list, &vec2, sizeof(Vector2f_t));
     list->push_back(list, &vec3, sizeof(Vector2f_t));
     while (!it->end(it)) {
-        vec = (Vector2f_t *)it->next(it);
+        vec = (Vector2f_t *)list->get(list, it->index);
+        printf("x: %.2f, y: %.2f\n", vec->x, vec->y);
+        it->next(it);
+    }
+    it->rewind(it);
+    list->pop_at(list, it->index + 1);
+    while (!it->end(it)) {
+        vec = (Vector2f_t *)list->get(list, it->index);
         printf("x: %.2f, y: %.2f\n", vec->x, vec->y);
         it->next(it);
     }

@@ -34,4 +34,6 @@ struct Iterator_s {
     void (*rewind)(Iterator_t *self);
 };
 
+void iterator_rewind(Iterator_t *self);
+
 #endif /* ITERATOR_CLASS_H_ */
