@@ -26,8 +26,8 @@ target_link_libraries(cplus_oop PRIVATE
 
 target_compile_options(cplus_oop PRIVATE -mavx2)
 
-target_include_directories(cplus_oop PRIVATE
-    ${CMAKE_SOURCE_DIR}/include
+target_include_directories(cplus_oop PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 target_compile_options(cplus_oop PRIVATE
@@ -57,4 +57,5 @@ option(ENABLE_DEBUG "Enable debug macros and flags" OFF)
 if(ENABLE_DEBUG)
     target_compile_definitions(cplus_oop PRIVATE DEBUG=1)
 endif()
+
 
