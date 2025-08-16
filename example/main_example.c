@@ -15,6 +15,8 @@ int main(void)
     /** for item in array do printf(item) */
     array_foreach(array, any, str, { printf("%s ", (const char *) str); });
 
+    __assert(array->size(array) == 3, "Expected size to be 3, got %zu", array->size(array));
+
     /** no memory leaks because every allocation is handled by our garbage collector */
     return 0;
 }
