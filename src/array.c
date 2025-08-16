@@ -25,6 +25,11 @@ __cplus__const __cplus__used const Class *ArrayGetClass(void)
     return &array_class;
 }
 
+__cplus__const size_t array_size(const Array *self)
+{
+    return self->_priv._size;
+}
+
 static __inline void array_resize(Array *self, const size_t new_size)
 {
     struct _ArrayData *priv = &self->_priv;

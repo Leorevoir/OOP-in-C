@@ -23,6 +23,7 @@ typedef struct Array {
     void (*clear)(struct Array *self);
     void (*resize)(struct Array *self, size_t new_size);
     void *(*at)(const struct Array *self, size_t index);
+    size_t (*size)(const struct Array *self);
 
     struct _ArrayData _priv;
 } Array;
