@@ -25,7 +25,7 @@ __cplus__const __cplus__used const Class *ArrayGetClass(void)
     return &array_class;
 }
 
-__cplus__const size_t array_size(const Array *self)
+static __cplus__const size_t array_size(const Array *self)
 {
     return self->_priv._size;
 }
@@ -122,6 +122,7 @@ static void array_ctor(void *instance, va_list *args)
     self->remove = array_remove;
     self->clear = array_clear;
     self->resize = array_resize;
+    self->size = array_size;
     self->at = array_at;
 
     priv->_elem_size = va_arg(*args, size_t);
