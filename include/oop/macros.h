@@ -13,6 +13,8 @@
 #define __cplus__used __attribute__((used))
 #define __cplus__defer(func) __attribute__((cleanup(func)))
 
+#define __cplus__nodiscard [[nodiscard]]
+
 #define forever for (;;)
 #define foreach(TYPE, LIST, WORKER)                                                                                    \
     for (TYPE *it = (LIST), *__next; it && ((__next = it->next), 1); it = __next)                                      \

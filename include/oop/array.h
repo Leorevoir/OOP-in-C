@@ -28,7 +28,7 @@ typedef struct Array {
     struct _ArrayData _priv;
 } Array;
 
-__cplus__const const Class *ArrayGetClass(void);
+__cplus__nodiscard __cplus__const const Class *ArrayGetClass(void);
 #define ArrayClass ArrayGetClass()
 
 #define array_foreach(array, type, var, code)                                                                          \

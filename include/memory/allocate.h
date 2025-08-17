@@ -8,7 +8,7 @@
 #define __gc_get_ptr(header) ((void *) ((char *) (header) + sizeof(struct __gc_t)))
 #define __gc_get_header(ptr) ((struct __gc_t *) ((char *) (ptr) - sizeof(struct __gc_t)))
 
-static __inline void *__gc_allocate(const size_t size)
+__cplus__nodiscard static __inline void *__gc_allocate(const size_t size)
 {
     if (size == 0) {
         return NULL;
@@ -27,7 +27,7 @@ static __inline void *__gc_allocate(const size_t size)
     return __gc_get_ptr(header);
 }
 
-static __inline void *__gc_reallocate(void *ptr, const size_t size)
+__cplus__nodiscard static __inline void *__gc_reallocate(void *ptr, const size_t size)
 {
     if (!ptr) {
         return __gc_allocate(size);

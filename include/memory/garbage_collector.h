@@ -17,7 +17,7 @@ void __gc_cleanup(void);
 
 #define collect_garbage __gc_cleanup();
 
-void *_new(const Class *class, ...);
+__cplus__nodiscard void *_new(const Class *class, ...);
 void _delete(void *instance);
 
 #define new(class, ...) _new(class, __VA_ARGS__)
