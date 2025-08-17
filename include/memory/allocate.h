@@ -32,28 +32,43 @@ static __inline void *__gc_reallocate(void *ptr, const size_t size)
     if (!ptr) {
         return __gc_allocate(size);
     }
+
     if (size == 0) {
-        free(__gc_get_header(ptr));
+        struct __gc_t *old_header = __gc_get_header(ptr);
+        struct __gc_t **current = &__gc_objects;
+
+        while (*current) {
+            if (*current == old_header) {
+                *current = old_header->next;
+                break;
+            }
+            current = &(*current)->next;
+        }
+
+        free(old_header);
         return NULL;
     }
 
     struct __gc_t *old_header = __gc_get_header(ptr);
+    struct __gc_t **link_to_old = NULL;
+    struct __gc_t **current = &__gc_objects;
+
+    while (*current) {
+        if (*current == old_header) {
+            link_to_old = current;
+            break;
+        }
+        current = &(*current)->next;
+    }
+
     struct __gc_t *new_header = realloc(old_header, sizeof(struct __gc_t) + size);
 
     if (!new_header) {
         return NULL;
     }
 
-    if (new_header != old_header) {
-        struct __gc_t **prev = &__gc_objects;
-
-        foreach (struct __gc_t, *prev, {
-            if (it == old_header) {
-                *prev = new_header;
-                break;
-            }
-            prev = &it->next;
-        })
+    if (new_header != old_header && link_to_old) {
+        *link_to_old = new_header;
     }
 
     new_header->size = size;
