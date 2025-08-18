@@ -52,16 +52,16 @@ function _debug()
     exit 0
 }
 
-# function _tests_run()
-# {
-#     _base_run "-DCMAKE_BUILD_TYPE=Debug -DENABLE_DEBUG=ON -DENABLE_TESTING=ON" "$UNIT_TESTS_NAME"
-#     cd .. || _error "cd failed"
-#     if ! ./$UNIT_TESTS_NAME; then 
-#         _error "unit tests error" "unit tests failed!"
-#     fi
-#     _success "unit tests succeed!"
-#     exit 0
-# }
+function _tests_run()
+{
+    _base_run "-DCMAKE_BUILD_TYPE=Debug -DENABLE_DEBUG=ON -DENABLE_TESTING=ON" "$UNIT_TESTS_NAME"
+    cd .. || _error "cd failed"
+    if ! ./$UNIT_TESTS_NAME; then 
+        _error "unit tests error" "unit tests failed!"
+    fi
+    _success "unit tests succeed!"
+    exit 0
+}
 
 function _clean()
 {
@@ -102,9 +102,9 @@ EOF
     -d|--debug)
         _debug
         ;;
-    # -t|--tests)
-    #     _tests_run
-        # ;;
+    -t|--tests)
+        _tests_run
+        ;;
     -r|--re)
         _fclean
         _all

@@ -31,30 +31,24 @@ void *_new(const Class *class, ...)
     return obj;
 }
 
-// clang-format off
 void __gc_cleanup(void)
 {
-    if (!__gc_objects) {
-        return;
+    struct __gc_t *current = __gc_objects;
+
+    while (current) {
+        struct __gc_t *next = current->next;
+        free(current);
+        current = next;
     }
-    foreach (struct __gc_t, __gc_objects->next, {
-        liberate(it);
-    })
-    free(__gc_objects);
     __gc_objects = NULL;
-}// clang-format on
+}
 
 __cplus__ctor static __cplus__used void __gc_initialize(void)
 {
-    __gc_objects = malloc(sizeof(struct __gc_t));
-    __gc_objects->size = 2;
-    __gc_objects->marked = 0;
-    __gc_objects->next = NULL;
+    __gc_objects = NULL;
 }
 
 __cplus__dtor static __cplus__used void __gc_finalize(void)
 {
-    collect_garbage;
-    free(__gc_objects);
-    __gc_objects = NULL;
+    __gc_cleanup();
 }

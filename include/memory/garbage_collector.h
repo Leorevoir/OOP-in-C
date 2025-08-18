@@ -1,6 +1,9 @@
 #ifndef C_GARBAGE_COLLECTOR_H_
 #define C_GARBAGE_COLLECTOR_H_
 
+#define __gc_get_ptr(header) ((void *) ((char *) (header) + sizeof(struct __gc_t)))
+#define __gc_get_header(ptr) ((struct __gc_t *) ((char *) (ptr) - sizeof(struct __gc_t)))
+
 #include <oop/interface.h>
 #include <oop/macros.h>
 #include <stddef.h>
