@@ -1,28 +1,33 @@
 #ifndef C_MEMORY_LIBERATE_H_
 #define C_MEMORY_LIBERATE_H_
 
+#include <memory/garbage_collector.h>
 #include <oop/macros.h>
 #include <stdlib.h>
 
-static __inline void __gc_null_ptr(void *out_ptr)
+static __inline void __gc_free_ptr(void **ptr_ref)
 {
-    void **in_obj = (void **) &out_ptr;
-
-    *in_obj = NULL;
-}
-
-#define defer_null __cplus__defer(__gc_null_ptr)
-
-static __inline void __gc_free_ptr(void *out_ptr)
-{
-    defer_null void *in_ptr = out_ptr;
-
-    if (!in_ptr) {
+    if (!ptr_ref || !*ptr_ref) {
         return;
     }
-    free(in_ptr);
+
+    void *ptr = *ptr_ref;
+
+    struct __gc_t *header = __gc_get_header(ptr);
+    struct __gc_t **current = &__gc_objects;
+
+    while (*current) {
+        if (*current == header) {
+            *current = header->next;
+            break;
+        }
+        current = &(*current)->next;
+    }
+
+    free(header);
+    *ptr_ref = NULL;
 }
 
-#define liberate(ptr) __gc_free_ptr(ptr)
+#define liberate(ptr) __gc_free_ptr((void **) &ptr)
 
 #endif /* C_MEMORY_LIBERATE_H_ */

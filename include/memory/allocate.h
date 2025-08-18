@@ -5,9 +5,6 @@
 #include <memory/garbage_collector.h>
 #include <stdlib.h>
 
-#define __gc_get_ptr(header) ((void *) ((char *) (header) + sizeof(struct __gc_t)))
-#define __gc_get_header(ptr) ((struct __gc_t *) ((char *) (ptr) - sizeof(struct __gc_t)))
-
 __cplus__nodiscard static __inline void *__gc_allocate(const size_t size)
 {
     if (size == 0) {
