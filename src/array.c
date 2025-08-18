@@ -131,7 +131,8 @@ static void array_ctor(void *instance, va_list *args)
     priv->_data = NULL;
     priv->_elem_dtor = NULL;
 
-    if (priv->_capacity > 0 && priv->_elem_size > 0) {
+    __assert(priv->_elem_size > 0, "array: element size must be greater than 0");
+    if (priv->_capacity > 0) {
         allocate(priv->_data, priv->_capacity * priv->_elem_size);
     }
 }
