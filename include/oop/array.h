@@ -4,6 +4,8 @@
 #include <oop/interface.h>
 #include <oop/macros.h>
 
+#include <unistd.h>
+
 struct _ArrayData {
     void *_data;
 
@@ -22,8 +24,12 @@ typedef struct Array {
     void (*remove)(struct Array *self, size_t index);
     void (*clear)(struct Array *self);
     void (*resize)(struct Array *self, size_t new_size);
+    void (*sort)(struct Array *self, int (*cmp)(const void *a, const void *b));
+
     void *(*at)(const struct Array *self, size_t index);
+
     size_t (*size)(const struct Array *self);
+    ssize_t (*find)(const struct Array *self, const void *key, int (*cmp)(const void *a, const void *b));
 
     struct _ArrayData _priv;
 } Array;

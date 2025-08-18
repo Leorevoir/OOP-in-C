@@ -4,6 +4,7 @@
 #include "tests.h"
 
 #include <string.h>
+#include <unistd.h>
 
 Test(Array, array_new)
 {
@@ -362,5 +363,104 @@ Test(Array, array_mixed_operations)
     cr_assert(*(int *) array->at(array, 1) == 3);
     cr_assert(*(int *) array->at(array, 2) == 2);
     cr_assert(*(int *) array->at(array, 3) == 4);
+    delete (array);
+}
+
+int int_compare(const void *a, const void *b)
+{
+    return (*(int *) a - *(int *) b);
+}
+
+Test(Array, array_sort)
+{
+    Array *array = new (ArrayClass, sizeof(int), 5);
+    const int vals[5] = {5, 3, 1, 4, 2};
+
+    for (int i = 0; i < 5; ++i) {
+        array->append(array, &vals[i]);
+    }
+
+    cr_assert(array->size(array) == 5);
+    cr_assert(array->_priv._capacity >= 5);
+
+    array->sort(array, int_compare);
+
+    cr_assert(*(int *) array->at(array, 0) == 1);
+    cr_assert(*(int *) array->at(array, 1) == 2);
+    cr_assert(*(int *) array->at(array, 2) == 3);
+    cr_assert(*(int *) array->at(array, 3) == 4);
+    cr_assert(*(int *) array->at(array, 4) == 5);
+}
+
+Test(Array, array_sort_empty)
+{
+    Array *array = new (ArrayClass, sizeof(int), 0);
+
+    array->sort(array, int_compare);
+    cr_assert(array->size(array) == 0);
+    delete (array);
+}
+
+Test(Array, array_sort_single)
+{
+    Array *array = new (ArrayClass, sizeof(int), 1);
+    int val = 42;
+
+    array->append(array, &val);
+    array->sort(array, int_compare);
+    cr_assert(array->size(array) == 1);
+    cr_assert(*(int *) array->at(array, 0) == 42);
+    delete (array);
+}
+
+Test(Array, array_sort_invalid)
+{
+    Array *array = new (ArrayClass, sizeof(int), 0);
+
+    array->sort(array, int_compare);
+    cr_assert(array->size(array) == 0);
+    delete (array);
+}
+
+Test(Array, array_find)
+{
+    Array *array = new (ArrayClass, sizeof(int), 5);
+    const int vals[5] = {1, 2, 3, 4, 5};
+
+    for (int i = 0; i < 5; ++i) {
+        array->append(array, &vals[i]);
+    }
+    int target = 3;
+
+    array->sort(array, int_compare);
+    const ssize_t index = array->find(array, &target, int_compare);
+
+    cr_assert(index == 2);
+    cr_assert(*(int *) array->at(array, index) == target);
+}
+
+Test(Array, array_find_not_found)
+{
+    Array *array = new (ArrayClass, sizeof(int), 5);
+    const int vals[5] = {1, 2, 3, 4, 5};
+
+    for (int i = 0; i < 5; ++i) {
+        array->append(array, &vals[i]);
+    }
+    int target = 6;
+
+    array->sort(array, int_compare);
+    const ssize_t index = array->find(array, &target, int_compare);
+
+    cr_assert(index == -1);
+}
+
+Test(Array, array_find_empty)
+{
+    Array *array = new (ArrayClass, sizeof(int), 0);
+    int target = 42;
+    const ssize_t index = array->find(array, &target, int_compare);
+
+    cr_assert(index == -1);
     delete (array);
 }
