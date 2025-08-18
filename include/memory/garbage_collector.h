@@ -21,9 +21,9 @@ void __gc_cleanup(void);
 #define collect_garbage __gc_cleanup();
 
 __cplus__nodiscard void *_new(const Class *class, ...);
-void _delete(void *instance);
+void _delete(void **obj_pp);
 
 #define new(class, ...) _new(class, __VA_ARGS__)
-#define delete(instance) _delete(instance);
+#define delete(instance) _delete((void **) &instance);
 
 #endif /* C_GARBAGE_COLLECTOR_H_ */

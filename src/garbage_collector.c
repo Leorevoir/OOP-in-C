@@ -4,10 +4,8 @@
 
 struct __gc_t *__gc_objects = NULL;
 
-void _delete(void *obj)
+void _delete(void **obj_pp)
 {
-    void **obj_pp = (void **) &obj;
-
     if (!obj_pp || !*obj_pp) {
         return;
     }
@@ -17,6 +15,8 @@ void _delete(void *obj)
     if (class && class->__dtor__) {
         class->__dtor__(*obj_pp);
     }
+
+    __gc_free_ptr(obj_pp);
 }
 
 void *_new(const Class *class, ...)
