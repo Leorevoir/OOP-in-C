@@ -2,6 +2,7 @@
 #include <memory/allocate.h>
 #include <oop/array.h>
 
+#include <stdlib.h>
 #include <string.h>
 
 __cplus__used static void array_ctor(void *instance, va_list *args);
@@ -28,6 +29,30 @@ __cplus__const __cplus__used const Class *ArrayGetClass(void)
 static __cplus__const size_t array_size(const Array *self)
 {
     return self->_priv._size;
+}
+
+static void array_sort(Array *self, int (*cmp)(const void *a, const void *b))
+{
+    struct _ArrayData *priv = &self->_priv;
+
+    if (priv->_size > 1) {
+        qsort(priv->_data, priv->_size, priv->_elem_size, cmp);
+    }
+}
+
+static __cplus__const ssize_t array_find(const Array *self, const void *key, int (*cmp)(const void *a, const void *b))
+{
+    const struct _ArrayData *priv = &self->_priv;
+    if (priv->_size == 0) {
+        return -1;
+    }
+
+    void *found = bsearch(key, priv->_data, priv->_size, priv->_elem_size, cmp);
+    if (found == NULL) {
+        return -1;
+    }
+
+    return ((char *) found - (char *) priv->_data) / (ssize_t) priv->_elem_size;
 }
 
 static __inline void array_resize(Array *self, const size_t new_size)
@@ -122,8 +147,11 @@ static void array_ctor(void *instance, va_list *args)
     self->remove = array_remove;
     self->clear = array_clear;
     self->resize = array_resize;
-    self->size = array_size;
+    self->sort = array_sort;
+
     self->at = array_at;
+    self->size = array_size;
+    self->find = array_find;
 
     priv->_elem_size = va_arg(*args, size_t);
     priv->_capacity = va_arg(*args, size_t);
