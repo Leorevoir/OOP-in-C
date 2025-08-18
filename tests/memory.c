@@ -1,29 +1,10 @@
-#include <criterion/criterion.h>
-
 #include <memory/allocate.h>
 #include <memory/garbage_collector.h>
 #include <memory/liberate.h>
 
-#include <fcntl.h>
+#include "tests.h"
+
 #include <string.h>
-#include <unistd.h>
-
-static int stderr_fd;
-
-static void remove_stderr(void)
-{
-    int devnull = open("/dev/null", O_WRONLY);
-    stderr_fd = dup(STDERR_FILENO);
-
-    dup2(devnull, STDERR_FILENO);
-    close(devnull);
-}
-
-static void restore_stderr()
-{
-    dup2(stderr_fd, STDERR_FILENO);
-    close(stderr_fd);
-}
 
 Test(__gc_t, memory_allocate)
 {
