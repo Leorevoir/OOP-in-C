@@ -6,15 +6,7 @@
 
 #include <unistd.h>
 
-struct _ArrayData {
-    void *_data;
-
-    size_t _elem_size;
-    size_t _size;
-    size_t _capacity;
-
-    ClassDtor _elem_dtor;
-};
+typedef struct ArrayData ArrayData;
 
 typedef struct Array {
     const Class *class;
@@ -31,14 +23,15 @@ typedef struct Array {
     size_t (*size)(const struct Array *self);
     ssize_t (*find)(const struct Array *self, const void *key, int (*cmp)(const void *a, const void *b));
 
-    struct _ArrayData _priv;
+    ClassDtor elem_dtor;
+    ArrayData *_priv;
 } Array;
 
 __cplus__nodiscard __cplus__const const Class *ArrayGetClass(void);
 #define ArrayClass ArrayGetClass()
 
 #define array_foreach(array, type, var, code)                                                                          \
-    for (size_t __i = 0; __i < (array)->_priv._size; ++__i) {                                                          \
+    for (size_t __i = 0; __i < (array)->size(array); ++__i) {                                                          \
         type *var = (type *) array->at(array, __i);                                                                    \
         code;                                                                                                          \
     }
