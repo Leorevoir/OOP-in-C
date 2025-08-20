@@ -89,7 +89,7 @@ static void map_insert(Map *self, const void *key, const void *data)
 
     map_resize(self, self->_priv->size + 1);
 
-    const size_t hash = hash_str((const char *) key);
+    const size_t hash = self->hash_func(key);
     const size_t slot_index = _find_slot_priv(self, key, hash);
     MapSlot *slot = &self->_slots[slot_index];
 
@@ -113,7 +113,7 @@ static bool map_contains(const Map *self, const void *key)
         return false;
     }
 
-    const size_t hash = hash_str((const char *) key);
+    const size_t hash = self->hash_func(key);
     const size_t slot_index = _find_slot_priv(self, key, hash);
 
     return self->_slots[slot_index].state == SLOT_OCCUPIED;
@@ -125,7 +125,7 @@ static const void *map_get(const Map *self, const void *key)
         return NULL;
     }
 
-    const size_t hash = hash_str((const char *) key);
+    const size_t hash = self->hash_func(key);
     const size_t slot_index = _find_slot_priv(self, key, hash);
 
     if (self->_slots[slot_index].state == SLOT_OCCUPIED) {
@@ -141,7 +141,7 @@ static bool map_remove(Map *self, const void *key)
         return false;
     }
 
-    const size_t hash = hash_str((const char *) key);
+    const size_t hash = self->hash_func(key);
     const size_t slot_index = _find_slot_priv(self, key, hash);
     MapSlot *slot = &self->_slots[slot_index];
 
