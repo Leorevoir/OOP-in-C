@@ -174,6 +174,11 @@ static void map_clear(Map *self)
  * private
  */
 
+static __inline size_t _map_hash_str(const void *key)
+{
+    return hash_str((const char *) key);
+}
+
 static size_t _find_slot_priv(const Map *self, const void *key, size_t hash)
 {
     size_t attempt = 0;
@@ -255,6 +260,7 @@ static void map_ctor(void *instance, va_list *args)
     self->resize = map_resize;
     self->clear = map_clear;
     self->size = map_size;
+    self->hash_func = _map_hash_str;
 
     size_t capacity = va_arg(*args, size_t);
     if (capacity == 0) {

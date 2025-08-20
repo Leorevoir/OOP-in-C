@@ -22,4 +22,15 @@ __cplus__const static __inline size_t hash_str(const char *s)
     return h;
 }
 
+static __inline size_t sv_hash(const void *key)
+{
+    const StrView *sv = key;
+    size_t hash = 5381;
+
+    for (size_t i = 0; i < sv->len; i++) {
+        hash = ((hash << 5) + hash) + (const size_t) sv->ptr[i];
+    }
+    return hash;
+}
+
 #endif /* CPLUS_OOP_H_ */

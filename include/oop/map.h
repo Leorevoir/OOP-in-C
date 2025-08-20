@@ -10,6 +10,8 @@ typedef enum { SLOT_EMPTY = 0, SLOT_OCCUPIED = 1, SLOT_DELETED = 2 } SlotState;
 typedef struct MapSlot MapSlot;
 typedef struct MapData MapData;
 
+typedef size_t (*MapHash)(const void *key);
+
 typedef struct Map {
     const Class *class;
 
@@ -23,6 +25,7 @@ typedef struct Map {
 
     MapData *_priv;
     MapSlot *_slots;
+    MapHash hash_func;
 } Map;
 
 __cplus__const const Class *MapGetClass(void);
