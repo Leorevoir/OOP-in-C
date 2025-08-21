@@ -1,7 +1,9 @@
-#include "oop/string.h"
 #include <memory/allocate.h>
 #include <memory/liberate.h>
+
 #include <oop/map.h>
+#include <oop/string.h>
+
 #include <string.h>
 
 /**
@@ -41,7 +43,7 @@ static __inline void initialize_slots(MapSlot *slots, size_t capacity)
     }
 }
 
-static size_t _find_slot_priv(const Map *self, const void *key, size_t hash);
+static size_t _find_slot_priv(const Map *self, size_t hash);
 static bool _map_resize_priv(Map *self, size_t new_capacity);
 
 // clang-format off
@@ -90,7 +92,7 @@ static void map_insert(Map *self, const void *key, const void *data)
     map_resize(self, self->_priv->size + 1);
 
     const size_t hash = self->hash_func(key);
-    const size_t slot_index = _find_slot_priv(self, key, hash);
+    const size_t slot_index = _find_slot_priv(self, hash);
     MapSlot *slot = &self->_slots[slot_index];
 
     if (slot->state == SLOT_OCCUPIED) {
@@ -114,7 +116,7 @@ static bool map_contains(const Map *self, const void *key)
     }
 
     const size_t hash = self->hash_func(key);
-    const size_t slot_index = _find_slot_priv(self, key, hash);
+    const size_t slot_index = _find_slot_priv(self, hash);
 
     return self->_slots[slot_index].state == SLOT_OCCUPIED;
 }
@@ -126,7 +128,7 @@ static const void *map_get(const Map *self, const void *key)
     }
 
     const size_t hash = self->hash_func(key);
-    const size_t slot_index = _find_slot_priv(self, key, hash);
+    const size_t slot_index = _find_slot_priv(self, hash);
 
     if (self->_slots[slot_index].state == SLOT_OCCUPIED) {
         return self->_slots[slot_index].data;
@@ -142,7 +144,7 @@ static bool map_remove(Map *self, const void *key)
     }
 
     const size_t hash = self->hash_func(key);
-    const size_t slot_index = _find_slot_priv(self, key, hash);
+    const size_t slot_index = _find_slot_priv(self, hash);
     MapSlot *slot = &self->_slots[slot_index];
 
     if (slot->state == SLOT_OCCUPIED) {
@@ -179,7 +181,7 @@ static __inline size_t _map_hash_str(const void *key)
     return hash_str((const char *) key);
 }
 
-static size_t _find_slot_priv(const Map *self, const void *key, size_t hash)
+static size_t _find_slot_priv(const Map *self, size_t hash)
 {
     size_t attempt = 0;
 
@@ -191,8 +193,7 @@ static size_t _find_slot_priv(const Map *self, const void *key, size_t hash)
             return index;
         }
 
-        if (slot->state == SLOT_OCCUPIED && slot->hash == hash
-            && strcmp((const char *) slot->key, (const char *) key) == 0) {
+        if (slot->state == SLOT_OCCUPIED && slot->hash == hash) {
             return index;
         }
 
@@ -225,7 +226,7 @@ static bool _map_resize_priv(Map *self, size_t new_capacity)
         for (size_t i = 0; i < old_capacity; i++) {
             if (old_slots[i].state == SLOT_OCCUPIED) {
                 const size_t hash = old_slots[i].hash;
-                const size_t slot_index = _find_slot_priv(self, old_slots[i].key, hash);
+                const size_t slot_index = _find_slot_priv(self, hash);
                 MapSlot *slot = &self->_slots[slot_index];
 
                 slot->key = old_slots[i].key;
